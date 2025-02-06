@@ -1,8 +1,8 @@
 const TelegramBot = require('node-telegram-bot-api');
 const { Rcon } = require('rcon-client');
 
-
-const TELEGRAM_BOT_TOKEN = 'token';
+// Configuration // Конфигурация
+const TELEGRAM_BOT_TOKEN = 'token'; //Bot Token //Токен Бота
 const RCON_CONFIG = {
     host: 'host-ip',
     port: 0123,
@@ -12,19 +12,20 @@ const RCON_CONFIG = {
 
 const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: true });
 
-
+// Функция для отправки команд в RCON
+// Function for sending commands to RCON
 async function sendRconCommand(command) {
     try {
         const rcon = await Rcon.connect(RCON_CONFIG);
         const response = await rcon.send(command);
         await rcon.end();
-        return response.replace(/§./g, '');
+        return response.replace(/§./g, ''); // Removing the color codes // Убираем цветовые коды
     } catch (error) {
         return `Ошибка: ${error.message}`;
     }
 }
 
-
+// Command handler /swl | // Обработчик команд /swl
 bot.onText(/^\/(swl_add|swl_remove)\s+(\S+)/, async (msg, match) => {
     const chatId = msg.chat.id;
     const action = match[1];
@@ -42,7 +43,7 @@ bot.onText(/^\/swl_list$/, async (msg) => {
 ${response}`);
 });
 
-
+// Team /online | // Команда /online
 bot.onText(/^\/online$/, async (msg) => {
     const chatId = msg.chat.id;
     const response = await sendRconCommand('list');
@@ -50,7 +51,7 @@ bot.onText(/^\/online$/, async (msg) => {
 ${response}`);
 });
 
-
+// Command /plugins | // Команда /plugins
 bot.onText(/^\/plugins$/, async (msg) => {
     const chatId = msg.chat.id;
     const response = await sendRconCommand('plugins');
@@ -58,6 +59,7 @@ bot.onText(/^\/plugins$/, async (msg) => {
 ${response}`);
 });
 
+// Commands /help | // Команды / помощь
 bot.onText(/\/help/, (msg) => {
     const helpText = `Список доступных команд:\n\n` +
         `/help - Показать это сообщение.\n/online - Показать список игроков.\n/plugins - Показать список плагинов.\n\n` +
