@@ -59,12 +59,40 @@ bot.onText(/^\/plugins$/, async (msg) => {
 ${response}`);
 });
 
+// Command /ban | // Команда /ban
+bot.onText(/^\/ban\s+(\S+)/, async (msg, match) => {
+    const chatId = msg.chat.id;
+    const playerName = match[1];
+    const response = await sendRconCommand(`ban ${playerName}`);
+    bot.sendMessage(chatId, response);
+});
+
+// Command /unban | // Команда /unban
+bot.onText(/^\/unban\s+(\S+)/, async (msg, match) => {
+    const chatId = msg.chat.id;
+    const playerName = match[1];
+    const response = await sendRconCommand(`pardon ${playerName}`);
+    bot.sendMessage(chatId, response);
+});
+
+// Command /say | // Команда /say
+bot.onText(/^\/say\s+(.+)/, async (msg, match) => {
+    const chatId = msg.chat.id;
+    const message = match[1];
+    const response = await sendRconCommand(`say ${message}`);
+    bot.sendMessage(chatId, response);
+});
+
+
+
 // Commands /help | // Команды / помощь
 bot.onText(/\/help/, (msg) => {
     const helpText = `Список доступных команд:\n\n` +
         `/help - Показать это сообщение.\n/online - Показать список игроков.\n/plugins - Показать список плагинов.\n\n` +
-        '/swl_add <player_name> - Добавить игрока\n/swl_remove <player_name> — Удалить игрока\n/swl_list — Показать всех';
+        '/swl_add <player_name> - Добавить игрока\n/swl_remove <player_name> — Удалить игрока\n/swl_list — Показать всех\n\n' +
+        '/ban <player_name> - Забанить игрока\n/unban <player_name> - Разбанить игрока\n/say <message> - Отправить сообщение в чат сервера';
     bot.sendMessage(msg.chat.id, helpText);
 });
+
 
 console.log('Бот запущен!');
