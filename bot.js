@@ -90,7 +90,8 @@ bot.onText(/\/help/, (msg) => {
     const helpText = `Список доступных команд:\n\n` +
         `/help - Показать это сообщение.\n/online - Показать список игроков.\n/plugins - Показать список плагинов.\n\n` +
         '/swl_add <player_name> - Добавить игрока\n/swl_remove <player_name> — Удалить игрока\n/swl_list — Показать всех\n\n' +
-        '/ban <player_name> - Забанить игрока\n/unban <player_name> - Разбанить игрока\n/say <message> - Отправить сообщение в чат сервера';
+        '/ban <player_name> - Забанить игрока\n/unban <player_name> - Разбанить игрока\n/say <message> - Отправить сообщение в чат сервера\n\n'+
+        'Создатель @absolute_fqwfdcv\n\n'; +
     bot.sendMessage(msg.chat.id, helpText);
 });
 
